@@ -23,7 +23,7 @@ function MainSection() {
 
   return (
     <Flex flexDir={"column"} ml={"3rem"} mt={"1.2rem"}>
-      <MainHeader text={"Welcome " + user.name} />
+      <MainHeader text={"Welcome " + user.name + " 🤩"} />
       <Box>
         <Text fontWeight={"500"} mb={"1rem"} fontSize={"2rem"}>
           My packages 📦:
@@ -38,6 +38,14 @@ function MainSection() {
                   type={packages.type}
                   weight={packages.weight}
                   status={packages.status}
+                  flagStatus={packages.flagStatus}
+                  recEmail={packages.recEmail}
+                  sendEmail={packages.sendEmail}
+                  locations={packages.locations}
+                  width={packages.width}
+                  height={packages.height}
+                  cost={packages.cost}
+                  insurance={packages.insurance}
                 />
               );
             })}

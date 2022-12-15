@@ -19,7 +19,9 @@ const packageSchema = mongoose.Schema(
       type: Number,
       required: [true, "Please enter weight for package"],
     },
-    status: ["Transit", "Delivered", "Lost", "Damaged"],
+    status: {
+      type:String
+    },
     flagStatus: {
       type: String,
     },
@@ -27,11 +29,34 @@ const packageSchema = mongoose.Schema(
       type: String,
       required: [true, "Please enter the receiver email"],
     },
+    sendEmail: {
+      type: String,
+      required: [true, "Please enter the sender email"],
+    },
     details: {
       insuranceAmount: {
         type: Number,
       },
     },
+    locations:{
+      type:Array,
+    },
+    width:{
+      type:Number,
+      required: [true, "Please enter the width"],
+    },
+    height:{
+      type:Number,
+      required: [true, "Please enter the height"],
+    },
+    cost:{
+      type:Number,
+    },
+    insurance:{
+      type:String,
+      required: [true, "Please enter Yes or No for insurance"],
+    }
+
   },
   {
     timestamps: true,

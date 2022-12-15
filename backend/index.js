@@ -19,6 +19,8 @@ app.use(express.urlencoded({ extended: false }));
 //here are the api's
 app.use("/api/users", require("./routers/userRouter"));
 app.use("/api/packages", require("./routers/packageRouter"));
+app.use("/api/payment", require("./routers/paymentRouter"));
+
 
 app.use(errorHandler);
 

@@ -11,12 +11,27 @@ function Packages(props) {
         p={"1rem"}
         w={"200px"}
       >
-        <Text>{props.name}</Text>
-        <Flex gap={"1"} flexDir={"column"} justifyContent={"space-between"}>
-          <Flex gap={"2"}>
+        <Text fontSize={"xl"} fontWeight={"bold"}>
+          {props.name}
+        </Text>
+        <Flex
+          pt={"3"}
+          gap={"1"}
+          flexDir={"column"}
+          justifyContent={"space-between"}
+        >
+          <Flex gap={"2"} flexWrap={"wrap"}>
             <Badge colorScheme="yellow">{props.type} </Badge>
             <Badge colorScheme="green">{props.weight}kg</Badge>
             <Badge>{props.status}</Badge>
+            <Badge>{props.flagStatus}</Badge>
+            <Badge>{props.sendEmail}</Badge>
+            <Badge>{props.recEmail}</Badge>
+            <Badge>{props.width + "m"}</Badge>
+            <Badge>{props.height + "m"}</Badge>
+            <Badge>{props.cost + "SAR"}</Badge>
+            <Badge>{props.insurance}</Badge>
+            <Badge>{props.locations[0].name}</Badge>
           </Flex>
         </Flex>
       </Box>

@@ -61,7 +61,7 @@ function Profile() {
     <Flex h={"100vh"} w={"100%"}>
       <HelpBar />
       <Flex flexDir={"column"} w={"100%"} ml={"3rem"} mt={"1.2rem"}>
-        <MainHeader text={"Update Your Profile"} />
+        <MainHeader text={"Update Your Profile 😎"} />
         <Box w={{ sm: "100%", lg: "50%" }}>
           <Flex
             flexDirection={"column"}

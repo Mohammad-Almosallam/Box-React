@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 
 const Package = require("../models/packageModel");
 const User = require("../models/userModel");
+const Location = require("../models/locationModel");
 
 // @desc    Get Package
 // @route   GET /api/package
@@ -13,42 +14,162 @@ const getPackages = asyncHandler(async (req, res) => {
   res.status(200).json(package);
 });
 
+function createRandomLocation(randomStatus) {
+  locationsArray = [];
+  const locations = ["AirPort", "Truck", "Warehouse", "Plane"];
+  let randomNumberOfStations = Math.floor(Math.random() * 11);
+
+  const retialCenterLocation = new Location({
+    name: "The Main Retail Center",
+    stage: 1,
+  });
+
+  locationsArray.push(retialCenterLocation);
+
+  let i = 1;
+
+  for (i; i <= randomNumberOfStations; i++) {
+    const newRandomLocation = new Location({
+      name: locations[Math.floor(Math.random() * 4)],
+      stage: i + 1,
+    });
+
+    newRandomLocation.save();
+    locationsArray.push(newRandomLocation);
+  }
+
+  const endStatus = new Location({
+    name: randomStatus,
+    stage: i + 1,
+  });
+
+  locationsArray.push(endStatus);
+
+  return locationsArray;
+}
+function createRandomState() {
+  statusArray = ["Transit", "Lost", "Damaged"];
+  var prob = Math.random();
+
+  if (prob < 0.9) {
+    // 90% chance of being here
+    return "Delivered";
+  } else {
+    return statusArray[Math.floor(Math.random() * 3)];
+  }
+}
+
+function calculateCost(type, weight, width, hieght, insurance) {
+  let cost = 0;
+  switch (type) {
+    case "Regular":
+      cost = 7 * weight * (width * hieght * 1.5);
+      break;
+
+    case "Liquid":
+      cost = 9 * weight * (width * hieght * 1.5);
+      break;
+
+    case "Chemical":
+      cost = 11 * weight * (width * hieght * 1.5);
+      break;
+
+    case "Fragile":
+      cost = 13 * weight * (width * hieght * 1.5);
+      break;
+  }
+  if (cost > 500) {
+    if (insurance === "Yes") {
+      cost += 30;
+    }
+  } else {
+    if (insurance === "Yes") {
+      cost += 7;
+    }
+  }
+  return cost;
+}
+
 // @desc    create Package
 // @route   POST /api/package
 // @access  Private
 const createPackage = asyncHandler(async (req, res) => {
-  const { name, weight, type, recEmail } = req.body;
+  const { name, weight, type, recEmail, width, height, insurance } = req.body;
 
-  if (!name || !weight || !type || !recEmail) {
+  if (
+    !name ||
+    !weight ||
+    !type ||
+    !recEmail ||
+    !width ||
+    !height ||
+    !insurance
+  ) {
     res.status(400);
-    throw new Error("Please add a text field");
+    throw new Error("Please add all text fields");
   }
 
-  User.findOne({ email: recEmail }, async function (err, user) {
+  User.findOne({ email: recEmail }, async function (err, reciver) {
     if (err) {
       res.status(400);
     } else {
-      if (user === null) {
+      if (reciver === null) {
         res.status(400);
         res.json({ message: "User not found or Email is wrong" });
       } else {
         //req.user.id is accesed after autherization thru authMiddleware
-        const package = await Package.create({
+        console.log(req.user.email);
+        randomStatus = createRandomState();
+        const senderPackage = await new Package({
           user: req.user.id,
           name: req.body.name,
           weight: req.body.weight,
           type: req.body.type,
+          width: req.body.width,
+          height: req.body.height,
+          insurance: req.body.insurance,
           recEmail: req.body.recEmail,
+          sendEmail: req.user.email,
+          flagStatus: "Sent",
+          status: randomStatus,
+          cost: calculateCost(
+            req.body.type,
+            req.body.weight,
+            req.body.width,
+            req.body.height,
+            req.body.insurance
+          ).toFixed(2),
         });
 
-        await Package.create({
-          user: user._id,
+        const recieverPackage = await new Package({
+          user: reciver._id,
           name: req.body.name,
           weight: req.body.weight,
           type: req.body.type,
-          recEmail: user.email,
+          width: req.body.width,
+          height: req.body.height,
+          insurance: req.body.insurance,
+          sendEmail: req.user.email,
+          recEmail: req.body.recEmail,
+          flagStatus: "Received",
+          status: randomStatus,
+          cost: calculateCost(
+            req.body.type,
+            req.body.weight,
+            req.body.width,
+            req.body.height,
+            req.body.insurance
+          ).toFixed(2),
         });
-        res.status(200).json(package);
+
+        randomLocationsArray = createRandomLocation(randomStatus);
+        senderPackage.locations = randomLocationsArray;
+        senderPackage.save();
+        recieverPackage.locations = randomLocationsArray;
+        recieverPackage.save();
+
+        // res.status(200).json(senderPackage);
+        res.status(200).json(recieverPackage);
       }
     }
   });

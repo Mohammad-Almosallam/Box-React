@@ -47,6 +47,37 @@ const deletePackage = async (packageId, token) => {
   }
 };
 
+function calculateCost(type, weight, width, hieght, insurance) {
+  let cost = 0;
+  switch (type) {
+    case "Regular":
+      cost = 7 * weight * (width * hieght * 1.5);
+      break;
+
+    case "Liquid":
+      cost = 9 * weight * (width * hieght * 1.5);
+      break;
+
+    case "Chemical":
+      cost = 11 * weight * (width * hieght * 1.5);
+      break;
+
+    case "Fragile":
+      cost = 13 * weight * (width * hieght * 1.5);
+      break;
+  }
+  if (cost > 500) {
+    if (insurance === "Yes") {
+      cost += 30;
+    }
+  } else {
+    if (insurance === "Yes") {
+      cost += 7;
+    }
+  }
+  return cost;
+}
+
 // const updatePackage = async (packageId, token) => {
 //     try {
 //       const config = {
@@ -62,4 +93,4 @@ const deletePackage = async (packageId, token) => {
 //     }
 //   };
 
-export { createPackage, getPackages, deletePackage };
+export { createPackage, getPackages, deletePackage, calculateCost };
