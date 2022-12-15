@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import {
-  IoLogInOutline,
-  IoChevronForwardOutline,
-  IoCubeOutline,
-} from "react-icons/io5";
+import HelpBar from "../components/HelpBar";
+import { IoPersonOutline, IoChevronForwardOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../auth/authService";
+import { updateUser } from "../auth/authService";
 import { toast } from "react-toastify";
 import {
   FormControl,
@@ -17,14 +14,19 @@ import {
   Box,
   Heading,
 } from "@chakra-ui/react";
+import MainHeader from "../components/MainHeader";
 
-function Login() {
+function Profile() {
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
+    address: "",
     password: "",
   });
 
-  const { email, password } = formData;
+  const { name, email, address, password } = formData;
   const navigate = useNavigate();
 
   function handleChange(e) {
@@ -38,52 +40,50 @@ function Login() {
     e.preventDefault();
 
     const userData = {
+      name,
       email,
+      address,
       password,
     };
 
-    const message = await login(userData);
+    const message = await updateUser(user._id, userData);
 
     if (message.status === 400) {
       toast.error(message.data.message);
     } else if (message.status === 200) {
-      toast.success("Logged in!");
-      navigate("/");
+      toast.success("Updated!");
     } else {
       toast.error(message.statusText);
     }
   }
 
   return (
-    <Flex flexDir={"column"} h="100vh" justifyContent="center" align={"center"}>
-      <Flex alignItems={"center"} gap={"0.3rem"}>
-        <IoCubeOutline style={{ height: "68px", width: "55px" }} />
-      </Flex>
-      <Flex width={"100%"} h={"100vh"} flexDir={{ md: "column", lg: "row" }}>
-        <Box
-          flexDir={"column"}
-          display={{ sm: "none", lg: "flex" }}
-          width={"50%"}
-        >
-          <img
-            style={{ margin: "auto" }}
-            src={require("../assets/img.gif")}
-          ></img>
-        </Box>
-        <Box w={{ sm: "100%", lg: "50%" }} margin={"auto"}>
+    <Flex h={"100vh"} w={"100%"}>
+      <HelpBar />
+      <Flex flexDir={"column"} w={"100%"} ml={"3rem"} mt={"1.2rem"}>
+        <MainHeader text={"Update Your Profile"} />
+        <Box w={{ sm: "100%", lg: "50%" }}>
           <Flex
             flexDirection={"column"}
             p={"1"}
-            m={"auto"}
+            m={0}
             w={{ sm: "300px", md: "400px" }}
             gap={"2"}
           >
-            <Heading display={"flex"} gap={"2"} alignItems={"center"} mb={"2"}>
-              <IoLogInOutline /> Login
-            </Heading>
-            <Text mb={"8"} fontWeight={"300"} fontSize={"2xl"}>
-              Send a package ASAP!
-            </Text>
+            <FormControl>
+              <FormLabel>Name</FormLabel>
+              <Input
+                type={"text"}
+                className="input"
+                id="name"
+                name="name"
+                value={name}
+                placeholder="Enter name"
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+            </FormControl>
             <FormControl>
               <FormLabel>Email</FormLabel>
               <Input
@@ -92,7 +92,21 @@ function Login() {
                 id="email"
                 name="email"
                 value={email}
-                placeholder="Enter email"
+                placeholder="Enter email address"
+                onChange={(e) => {
+                  handleChange(e);
+                }}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Address</FormLabel>
+              <Input
+                type={"address"}
+                className="input"
+                id="address"
+                name="address"
+                value={address}
+                placeholder="e.g. Dhahran, KFUPM"
                 onChange={(e) => {
                   handleChange(e);
                 }}
@@ -125,18 +139,9 @@ function Login() {
               mt={"3"}
               alignItems={"center"}
             >
-              Login
+              Update
               <IoChevronForwardOutline />
             </Button>
-            <Text>
-              Don't have an acount?
-              <Link
-                to={"/register"}
-                style={{ color: "gray", textDecoration: "underline" }}
-              >
-                create account
-              </Link>
-            </Text>
           </Flex>
         </Box>
       </Flex>
@@ -144,4 +149,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Profile;

@@ -9,8 +9,8 @@ root.render(
   <ChakraProvider
     theme={extendTheme({
       fonts: {
-        body: `'Cairo', sans-serif`,
-        heading: `'Cairo', sans-serif`,
+        body: `'PT Sans', sans-serif`,
+        heading: `'PT Sans', sans-serif`,
       },
       breakpoints: {
         sm: "320px",

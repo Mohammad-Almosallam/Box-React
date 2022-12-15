@@ -74,6 +74,49 @@ the user data. If it is not correct it will throw an error. */
   }
 });
 
+const updateUser = asyncHandler(async (req, res) => {
+  const { name, email, address, password } = req.body;
+
+  //Checking inputs are all entered
+  if (!name || !email || !address || !password) {
+    res.status(400);
+    throw new Error("Please add all fields");
+  }
+
+  const checkEmail = await User.findOne({ email: email });
+
+  if (checkEmail) {
+    if (email === req.user.email) {
+      res.status(400);
+      throw new Error("An email already exists");
+    }
+  }
+
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  req.body.password = hashedPassword;
+
+  const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+
+  res.status(200).json({
+    _id: updatedUser.id,
+    name: updatedUser.name,
+    address: updatedUser.address,
+    email: updatedUser.email,
+    token: generateToken(user._id),
+  });
+});
+
 //Generate JWT (Token)
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -84,4 +127,5 @@ const generateToken = (id) => {
 module.exports = {
   registerUser,
   loginUser,
+  updateUser,
 };
