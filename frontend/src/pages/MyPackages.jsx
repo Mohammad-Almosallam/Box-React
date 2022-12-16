@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Packages from "./Packages";
+import Packages from "../components/Packages";
 import { getPackages } from "../auth/packageService";
 import { Flex, Text, Box, Divider } from "@chakra-ui/react";
-import SkeletonRender from "./SkeletonRender";
-import MainHeader from "./MainHeader";
+import SkeletonRender from "../components/SkeletonRender";
+import MainHeader from "../components/MainHeader";
 
 function MainSection() {
   const [userPackages, setUserPackges] = useState(null);
@@ -20,7 +20,6 @@ function MainSection() {
       setUserPackges(packagee.data);
     }
   }
-
   return (
     <Flex flexDir={"column"} ml={"3rem"} mt={"1.2rem"}>
       <MainHeader text={"Welcome " + user.name + " 🤩"} />

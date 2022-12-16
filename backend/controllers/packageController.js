@@ -14,6 +14,22 @@ const getPackages = asyncHandler(async (req, res) => {
   res.status(200).json(package);
 });
 
+const getAllPackages = asyncHandler(async (req, res) => {
+  const package = await Package.find();
+  const noDuplicatedPackages = package.filter(
+    (value, index, self) =>
+      index ===
+      self.findIndex(
+        (t) =>
+          t.name === value.name &&
+          t.type === value.type &&
+          t.weight === value.weight &&
+          t.cost === value.cost
+      )
+  );
+  res.status(200).json(noDuplicatedPackages);
+});
+
 function createRandomLocation(randomStatus) {
   locationsArray = [];
   const locations = ["AirPort", "Truck", "Warehouse", "Plane"];
@@ -230,4 +246,5 @@ module.exports = {
   createPackage,
   updatePackage,
   deletePackage,
+  getAllPackages,
 };

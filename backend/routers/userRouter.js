@@ -5,9 +5,10 @@ const {
   loginUser,
   updateUser,
   getUser,
+  getAllUsers,
 } = require("../controllers/userController");
 
-router.post("/", registerUser);
+router.route("/").post(registerUser).get(getAllUsers);
 router.post("/login", loginUser);
 router.route("/:id").put(updateUser).get(getUser);
 

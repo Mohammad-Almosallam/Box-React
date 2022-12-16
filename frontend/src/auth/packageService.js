@@ -32,6 +32,16 @@ const getPackages = async (token) => {
   }
 };
 
+const getAllPackages = async () => {
+  try {
+    const response = await axios.get(API_URL + "allPackages");
+
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
+
 const deletePackage = async (packageId, token) => {
   try {
     const config = {
@@ -93,4 +103,10 @@ function calculateCost(type, weight, width, hieght, insurance) {
 //     }
 //   };
 
-export { createPackage, getPackages, deletePackage, calculateCost };
+export {
+  createPackage,
+  getPackages,
+  deletePackage,
+  calculateCost,
+  getAllPackages,
+};

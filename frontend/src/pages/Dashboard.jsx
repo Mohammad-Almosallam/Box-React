@@ -13,7 +13,7 @@ import {
   Avatar,
 } from "@chakra-ui/react";
 import HelpBar from "../components/HelpBar";
-import MyPackages from "../components/MyPackages";
+import MyPackages from "./MyPackages";
 
 function Dashboard() {
   const navigate = useNavigate();

@@ -51,8 +51,19 @@ const getUser = async (userId) => {
     return err.response;
   }
 };
+
+const getAllUsers = async () => {
+  try {
+    const response = await axios.get(API_URL);
+
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
+
 const logout = () => {
   localStorage.removeItem("user");
 };
 
-export { register, login, logout, updateUser, getUser };
+export { register, login, logout, updateUser, getUser, getAllUsers };
