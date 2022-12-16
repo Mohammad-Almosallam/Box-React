@@ -186,18 +186,6 @@ const updatePackage = asyncHandler(async (req, res) => {
     throw new Error("Package not found");
   }
 
-  const user = await User.findById(req.user.id);
-
-  if (!user) {
-    res.status(401);
-    throw new Error("User not found");
-  }
-  //Make sure the logged in user matches the package user
-  if (package.user.toString() !== user.id) {
-    res.status(401);
-    throw new Error("User not authorized");
-  }
-
   const updatedPackage = await Package.findByIdAndUpdate(
     req.params.id,
     req.body,

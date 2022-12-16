@@ -18,7 +18,6 @@ import MyPackages from "../components/MyPackages";
 function Dashboard() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
-  const [userGoals, setUserGoals] = useState("");
 
   /* It's checking if the user is authenticated. If not, it redirects to the login page. */
   useEffect(() => {

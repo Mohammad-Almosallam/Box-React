@@ -8,6 +8,7 @@ import {
   IoRocketOutline,
   IoPersonOutline,
   IoLogOutOutline,
+  IoDocumentTextOutline,
 } from "react-icons/io5";
 
 import {
@@ -18,14 +19,20 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 
-function HelpBar(props) {
+function HelpBar() {
   const navigate = useNavigate();
   const [isHovered, setHovered] = useState(false);
   const [buttonType, setButtonType] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
 
+  if (user.email === "admin@gmail.com") {
+    if (!isAdmin) {
+      setIsAdmin(true);
+    }
+  }
+
   const styles = {
-    textAlign: "left",
     fontSize: "1.2rem",
     padding: ".3rem 0rem .3rem 0",
     background: "transparent",
@@ -40,7 +47,7 @@ function HelpBar(props) {
       color={"white"}
       minW={"280px"}
     >
-      <Flex flexDir={"column"} h={"100vh"} justifyContent="space-between">
+      <Flex flexDir={"column"} h={"100%"} justifyContent="space-between">
         <Flex flexDir={"column"} p={"1.2rem"}>
           <Flex alignItems={"center"} justifyContent={"space-between"}>
             <Flex alignItems={"center"} gap={"0.3rem"}>
@@ -105,6 +112,36 @@ function HelpBar(props) {
                 Send Package
               </button>
             </Flex>
+            {isAdmin ? (
+              <Flex
+                alignItems={"center"}
+                textDecoration={
+                  isHovered && buttonType === "Report" ? "underline" : "none"
+                }
+                gap={".8rem"}
+              >
+                <IoDocumentTextOutline
+                  style={{ height: "23px", width: "23px" }}
+                />
+                <button
+                  style={styles}
+                  onMouseOver={(e) => {
+                    setButtonType(e.target.innerHTML);
+                    setHovered(true);
+                  }}
+                  onMouseOut={(e) => {
+                    setButtonType(e.target.innerHTML);
+                    setHovered(false);
+                  }}
+                  onClick={() => {
+                    navigate("/report");
+                  }}
+                >
+                  Report
+                </button>
+              </Flex>
+            ) : null}
+
             <Flex
               alignItems={"center"}
               textDecoration={

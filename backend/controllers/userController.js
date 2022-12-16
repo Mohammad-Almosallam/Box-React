@@ -117,6 +117,17 @@ const updateUser = asyncHandler(async (req, res) => {
   });
 });
 
+const getUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  res.status(200).json(user);
+});
+
 //Generate JWT (Token)
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -128,4 +139,5 @@ module.exports = {
   registerUser,
   loginUser,
   updateUser,
+  getUser,
 };

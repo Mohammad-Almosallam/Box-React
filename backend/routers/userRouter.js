@@ -4,10 +4,11 @@ const {
   registerUser,
   loginUser,
   updateUser,
+  getUser,
 } = require("../controllers/userController");
 
 router.post("/", registerUser);
 router.post("/login", loginUser);
-router.put("/:id", updateUser);
+router.route("/:id").put(updateUser).get(getUser);
 
 module.exports = router;

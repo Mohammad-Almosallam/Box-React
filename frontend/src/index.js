@@ -14,16 +14,14 @@ root.render(
       },
       breakpoints: {
         sm: "320px",
-        md: "468px",
+        md: "530px",
         lg: "1160px",
         xl: "1200px",
         "2xl": "1536px",
       },
     })}
   >
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <App />
   </ChakraProvider>
 );
 
