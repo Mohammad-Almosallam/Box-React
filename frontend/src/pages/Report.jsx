@@ -11,7 +11,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import MainHeader from "../components/MainHeader";
-import ReactPackages from "../components/ReactPackages";
+import ReportPackages from "../components/ReportPackages";
 import ReportUsers from "../components/ReportUsers";
 import { getAllPackages } from "../auth/packageService";
 import { getAllUsers } from "../auth/authService";
@@ -23,8 +23,8 @@ function Report() {
   }, []);
   const [userPackages, setUserPackages] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
-  const [isOpen, setOpen] = useState(false);
-  const [isOpenUsers, setOpenUser] = useState(false);
+  const [isOpen, setOpen] = useState(true);
+  const [isOpenUsers, setOpenUser] = useState(true);
 
   async function renderAllPackages() {
     const packages = await getAllPackages();
@@ -34,8 +34,6 @@ function Report() {
     const users = await getAllUsers();
     setAllUsers(users.data);
   }
-
-  console.log(allUsers);
 
   return (
     <Flex h={"100vh"} w={"100%"}>
@@ -47,7 +45,7 @@ function Report() {
             All packages
           </Text>
           <Box>
-            <ReactPackages isOpen={isOpen} allData={userPackages} />
+            <ReportPackages isOpen={isOpen} allData={userPackages} />
             <Button
               mb={"2"}
               width={"100%"}

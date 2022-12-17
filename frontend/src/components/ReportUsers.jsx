@@ -5,6 +5,7 @@ import {
   Tbody,
   Collapse,
   Tr,
+  Text,
   Th,
   Td,
   TableContainer,
@@ -17,7 +18,7 @@ function ReportUsers(props) {
     <Collapse in={props.isOpen} animateOpacity>
       <TableContainer
         borderRadius={"25px"}
-        maxW={"1090px"}
+        w={{ md: "1100px", lg: "100%" }}
         overflowX={"scroll"}
       >
         <Table variant="simple" size={"md"}>
@@ -38,11 +39,15 @@ function ReportUsers(props) {
                     <Td>{eachUser.email}</Td>
                     <Td>{eachUser.address}</Td>
                     <Td>
-                      {eachUser.cards === []
-                        ? "No cards available"
-                        : eachUser.cards.map((eachCard) => {
-                            return eachCard["type"] + ",";
-                          })}
+                      {eachUser.cards.length === 0 ? (
+                        <Text textDecor={"line-through"}>
+                          No cards registerd
+                        </Text>
+                      ) : (
+                        eachUser.cards.map((eachCard) => {
+                          return eachCard["type"] + ",";
+                        })
+                      )}
                     </Td>
                   </Tr>
                 );

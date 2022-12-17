@@ -14,8 +14,8 @@ root.render(
       },
       breakpoints: {
         sm: "320px",
-        md: "530px",
-        lg: "1160px",
+        md: "1330px",
+        lg: "1700px",
         xl: "1200px",
         "2xl": "1536px",
       },

@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Box, Flex, Divider, Text, Avatar, propNames } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Divider,
+  Text,
+  Avatar,
+  propNames,
+  Badge,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../auth/authService";
 import {
@@ -139,6 +147,7 @@ function HelpBar() {
                 >
                   Report
                 </button>
+                <Badge colorScheme={"green"}>NEW</Badge>
               </Flex>
             ) : null}
 
