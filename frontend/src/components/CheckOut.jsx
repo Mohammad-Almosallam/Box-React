@@ -17,20 +17,19 @@ import {
   NumberInputField,
 } from "@chakra-ui/react";
 import PaymentCard from "./PaymentCard";
+import PaymentDrawer from "./PaymentDrawer";
 
 function CheckOut(props) {
-  console.log(props.userCards);
   return (
     <Flex flexDir={"column"} p={"4"} minW={"400px"} rounded={"3xl"}>
       <Text fontSize={"3xl"} mb={3} fontWeight={700}>
         Choose a card
       </Text>
-      <Flex gap={"1rem"}>
+      <Flex flexWrap={"wrap"} gap={"1rem"}>
         {props.userCards.length === 0 ? (
-          <Box>
-            <Text>No cards available</Text>
-            <Button>Add new card</Button>
-          </Box>
+          <Text p={"1rem"} fontSize={"1.2rem"} fontWeight={"500"}>
+            No cards available
+          </Text>
         ) : (
           props.userCards.map((eachCard) => {
             return (
@@ -47,6 +46,7 @@ function CheckOut(props) {
           })
         )}
       </Flex>
+      <PaymentDrawer />
     </Flex>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FormControl,
   FormLabel,
@@ -18,15 +18,21 @@ import {
 } from "@chakra-ui/react";
 
 function PaymentCard(props) {
+  const [isFocus, setFocus] = useState(false);
+
   return (
     <>
       <Box
-        bg={"transparent"}
+        bg={isFocus ? "#e8f3ff" : "transparent"}
         border={"1px solid #e4e4e4"}
+        borderColor={isFocus ? "blue.300" : "#e4e4e4"}
         borderRadius={"25px"}
         p={"1rem"}
         w={"fit-content"}
         h={"fit-content"}
+        onClick={() => {
+          setFocus((prevValue) => !prevValue);
+        }}
       >
         <Text fontSize={"xl"} fontWeight={"bold"}>
           {props.name}
