@@ -223,20 +223,29 @@ const deletePackage = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Package not found");
   }
+  await Package.deleteMany({
+    name: package.name,
+    type: package.type,
+    weight: package.weight,
+    width: package.width,
+    height: package.height,
+    cost: package.cost,
+  });
 
-  const user = await User.findById(req.user.id);
+  // const user = await User.findById(req.user.id);
 
-  if (!user) {
-    res.status(401);
-    throw new Error("User not found");
-  }
-  //Make sure the logged in user matches the package user
-  if (package.user.toString() !== user.id) {
-    res.status(401);
-    throw new Error("User not authorized");
-  }
+  // if (!user) {
+  //   res.status(401);
+  //   throw new Error("User not found");
+  // }
+  // //Make sure the logged in user matches the package user
+  // if (package.user.toString() !== user.id) {
+  //   res.status(401);
+  //   throw new Error("User not authorized");
+  // }
 
-  await package.remove();
+  // await package.remove();
+  // await recPackage.remove();
 
   res.status(200).json({ id: req.params.id });
 });

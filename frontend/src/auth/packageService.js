@@ -42,14 +42,9 @@ const getAllPackages = async () => {
   }
 };
 
-const deletePackage = async (packageId, token) => {
+const deletePackage = async (packageId) => {
   try {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const response = await axios.delete(API_URL + packageId, config);
+    const response = await axios.delete(API_URL + packageId);
 
     return response;
   } catch (err) {

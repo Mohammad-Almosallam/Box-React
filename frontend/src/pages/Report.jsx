@@ -15,12 +15,16 @@ import ReportPackages from "../components/ReportPackages";
 import ReportUsers from "../components/ReportUsers";
 import { getAllPackages } from "../auth/packageService";
 import { getAllUsers } from "../auth/authService";
+import { IoCloseOutline, IoCreateOutline } from "react-icons/io5";
+import { deletePackage } from "../auth/packageService";
+import { toast } from "react-toastify";
 
 function Report() {
   useEffect(() => {
     renderAllPackages();
     renderAllUsers();
-  }, []);
+  }, [deletePackageHandler]);
+
   const [userPackages, setUserPackages] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [isOpen, setOpen] = useState(true);
@@ -35,17 +39,40 @@ function Report() {
     setAllUsers(users.data);
   }
 
+  async function deletePackageHandler(e, packageId) {
+    e.preventDefault();
+
+    const message = await deletePackage(packageId);
+
+    if (message.status === 400) {
+      toast.error(message.data.message);
+    } else if (message.status === 200) {
+      toast.success("Package has been deleted!");
+    } else {
+      toast.error(message.statusText);
+    }
+  }
+
   return (
     <Flex h={"100vh"} w={"100%"}>
       <HelpBar />
-      <Flex flexDir={"column"} w={"100%"} m={"1.2rem 3rem 0rem 1.8rem "}>
+      <Flex
+        overflowY={"scroll"}
+        flexDir={"column"}
+        w={"100%"}
+        m={"1.2rem 3rem 0rem 1.8rem "}
+      >
         <MainHeader text={"Report 📝 "} />
         <Box>
           <Text fontSize={"2rem"} fontWeight={"700"}>
             All packages
           </Text>
           <Box>
-            <ReportPackages isOpen={isOpen} allData={userPackages} />
+            <ReportPackages
+              deletePackageHandler={deletePackageHandler}
+              isOpen={isOpen}
+              allData={userPackages}
+            />
             <Button
               mb={"2"}
               width={"100%"}
