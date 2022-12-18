@@ -14,8 +14,7 @@ import MainHeader from "../components/MainHeader";
 import ReportPackages from "../components/ReportPackages";
 import ReportUsers from "../components/ReportUsers";
 import { getAllPackages } from "../auth/packageService";
-import { getAllUsers } from "../auth/authService";
-import { IoCloseOutline, IoCreateOutline } from "react-icons/io5";
+import { deleteUser, getAllUsers } from "../auth/authService";
 import { deletePackage } from "../auth/packageService";
 import { toast } from "react-toastify";
 
@@ -23,7 +22,7 @@ function Report() {
   useEffect(() => {
     renderAllPackages();
     renderAllUsers();
-  }, [deletePackageHandler]);
+  }, [deletePackageHandler, deleteUserHandler]);
 
   const [userPackages, setUserPackages] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
@@ -48,6 +47,20 @@ function Report() {
       toast.error(message.data.message);
     } else if (message.status === 200) {
       toast.success("Package has been deleted!");
+    } else {
+      toast.error(message.statusText);
+    }
+  }
+
+  async function deleteUserHandler(e, userId) {
+    e.preventDefault();
+
+    const message = await deleteUser(userId);
+
+    if (message.status === 400) {
+      toast.error(message.data.message);
+    } else if (message.status === 200) {
+      toast.success("User has been deleted!");
     } else {
       toast.error(message.statusText);
     }
@@ -89,7 +102,11 @@ function Report() {
             All Users
           </Text>
           <Box>
-            <ReportUsers isOpen={isOpenUsers} allData={allUsers} />
+            <ReportUsers
+              deleteUserHandler={deleteUserHandler}
+              isOpen={isOpenUsers}
+              allData={allUsers}
+            />
             <Button
               mb={"2"}
               width={"100%"}

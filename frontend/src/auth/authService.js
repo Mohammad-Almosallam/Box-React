@@ -52,6 +52,16 @@ const getUser = async (userId) => {
   }
 };
 
+const deleteUser = async (userId) => {
+  try {
+    const response = await axios.delete(API_URL + userId);
+
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
+
 const getAllUsers = async () => {
   try {
     const response = await axios.get(API_URL);
@@ -66,4 +76,12 @@ const logout = () => {
   localStorage.removeItem("user");
 };
 
-export { register, login, logout, updateUser, getUser, getAllUsers };
+export {
+  register,
+  login,
+  logout,
+  updateUser,
+  getUser,
+  getAllUsers,
+  deleteUser,
+};

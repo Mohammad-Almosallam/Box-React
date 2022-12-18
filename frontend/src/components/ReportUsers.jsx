@@ -8,8 +8,10 @@ import {
   Text,
   Th,
   Td,
+  Flex,
   TableContainer,
 } from "@chakra-ui/react";
+import { IoCloseOutline, IoCreateOutline } from "react-icons/io5";
 
 function ReportUsers(props) {
   const data = props.allData;
@@ -24,6 +26,7 @@ function ReportUsers(props) {
         <Table variant="simple" size={"md"}>
           <Thead>
             <Tr>
+              <Th></Th>
               <Th>Name</Th>
               <Th>Email </Th>
               <Th>Address </Th>
@@ -35,6 +38,23 @@ function ReportUsers(props) {
               data.map((eachUser) => {
                 return (
                   <Tr key={eachUser._id}>
+                    <Td>
+                      {
+                        <Flex gap={"1rem"}>
+                          <button>
+                            <IoCreateOutline />
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              console.log("click");
+                              props.deleteUserHandler(e, eachUser._id);
+                            }}
+                          >
+                            <IoCloseOutline />
+                          </button>
+                        </Flex>
+                      }
+                    </Td>
                     <Td>{eachUser.name}</Td>
                     <Td>{eachUser.email}</Td>
                     <Td>{eachUser.address}</Td>

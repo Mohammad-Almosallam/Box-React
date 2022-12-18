@@ -12,25 +12,9 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { IoCloseOutline, IoCreateOutline } from "react-icons/io5";
-import { deletePackage } from "../auth/packageService";
-import { toast } from "react-toastify";
 
 function ReportPackages(props) {
   const data = props.allData;
-
-  async function deletePackageHandler(e, packageId) {
-    e.preventDefault();
-
-    const message = await deletePackage(packageId);
-
-    if (message.status === 400) {
-      toast.error(message.data.message);
-    } else if (message.status === 200) {
-      toast.success("Package has been deleted!");
-    } else {
-      toast.error(message.statusText);
-    }
-  }
 
   return (
     <Collapse in={props.isOpen} animateOpacity>
@@ -71,7 +55,7 @@ function ReportPackages(props) {
                           <button
                             onClick={(e) => {
                               console.log("click");
-                              deletePackageHandler(e, eachPackage._id);
+                              props.deletePackageHandler(e, eachPackage._id);
                             }}
                           >
                             <IoCloseOutline />

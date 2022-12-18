@@ -128,6 +128,18 @@ const getUser = asyncHandler(async (req, res) => {
   res.status(200).json(user);
 });
 
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+  await user.remove();
+
+  res.status(200).json(user);
+});
+
 const getAllUsers = asyncHandler(async (req, res) => {
   const users = await User.find();
 
@@ -147,4 +159,5 @@ module.exports = {
   updateUser,
   getUser,
   getAllUsers,
+  deleteUser,
 };
