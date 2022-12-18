@@ -74,7 +74,6 @@ function PaymentDrawer() {
       toast.error(message.data.message);
     } else if (message.status === 200) {
       toast.success("Card has been registered!");
-      //   onClose;
     } else {
       toast.error(message.statusText);
     }
