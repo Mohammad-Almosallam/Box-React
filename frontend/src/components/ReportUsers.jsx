@@ -10,8 +10,18 @@ import {
   Td,
   Flex,
   TableContainer,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+  Popover,
 } from "@chakra-ui/react";
 import { IoCloseOutline, IoCreateOutline } from "react-icons/io5";
+import ProfileForm from "./ProfileForm";
 
 function ReportUsers(props) {
   const data = props.allData;
@@ -41,12 +51,27 @@ function ReportUsers(props) {
                     <Td>
                       {
                         <Flex gap={"1rem"}>
-                          <button>
-                            <IoCreateOutline />
-                          </button>
+                          <Popover>
+                            <PopoverTrigger>
+                              <button>
+                                <IoCreateOutline />
+                              </button>
+                            </PopoverTrigger>
+                            <PopoverContent h={"180px"} overflow={"scroll"}>
+                              <PopoverArrow />
+                              <PopoverCloseButton />
+                              <PopoverHeader>Location List!</PopoverHeader>
+                              {
+                                <ProfileForm
+                                  key={eachUser._id}
+                                  edit={"Edit"}
+                                  _id={eachUser._id}
+                                />
+                              }
+                            </PopoverContent>
+                          </Popover>
                           <button
                             onClick={(e) => {
-                              console.log("click");
                               props.deleteUserHandler(e, eachUser._id);
                             }}
                           >

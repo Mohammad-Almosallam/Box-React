@@ -33,8 +33,12 @@ const updateUser = async (userId, userData) => {
     const response = await axios.put(API_URL + userId, userData);
 
     if (response.data) {
-      await localStorage.removeItem("user");
-      await localStorage.setItem("user", JSON.stringify(response.data));
+      if (
+        JSON.parse(localStorage.getItem("user")).email !== "admin@gmail.com"
+      ) {
+        await localStorage.removeItem("user");
+        await localStorage.setItem("user", JSON.stringify(response.data));
+      }
     }
     return response;
   } catch (err) {

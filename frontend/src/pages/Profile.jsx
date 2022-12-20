@@ -15,6 +15,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import MainHeader from "../components/MainHeader";
+import ProfileForm from "../components/ProfileForm";
 
 function Profile() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -63,86 +64,7 @@ function Profile() {
       <Flex flexDir={"column"} w={"100%"} ml={"3rem"} mt={"1.2rem"}>
         <MainHeader text={"Update Your Profile 😎"} />
         <Box w={{ sm: "100%", lg: "50%" }}>
-          <Flex
-            flexDirection={"column"}
-            p={"1"}
-            m={0}
-            w={{ sm: "300px", md: "400px" }}
-            gap={"2"}
-          >
-            <FormControl>
-              <FormLabel>Name</FormLabel>
-              <Input
-                type={"text"}
-                className="input"
-                id="name"
-                name="name"
-                value={name}
-                placeholder="Enter name"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Email</FormLabel>
-              <Input
-                type={"email"}
-                className="input"
-                id="email"
-                name="email"
-                value={email}
-                placeholder="Enter email address"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Address</FormLabel>
-              <Input
-                type={"address"}
-                className="input"
-                id="address"
-                name="address"
-                value={address}
-                placeholder="e.g. Dhahran, KFUPM"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Password</FormLabel>
-              <Input
-                type={"password"}
-                className="input"
-                id="password"
-                name="password"
-                value={password}
-                placeholder="Enter password"
-                onChange={(e) => {
-                  handleChange(e);
-                }}
-              />
-            </FormControl>
-            <Button
-              type="submit"
-              onClick={(e) => {
-                handleOnSubmit(e);
-              }}
-              bg={"black"}
-              colorScheme={""}
-              color={"white"}
-              variant="solid"
-              width={"100%"}
-              mt={"3"}
-              alignItems={"center"}
-            >
-              Update
-              <IoChevronForwardOutline />
-            </Button>
-          </Flex>
+        <ProfileForm/>
         </Box>
       </Flex>
     </Flex>
