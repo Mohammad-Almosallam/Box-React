@@ -17,6 +17,7 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import { IoMapOutline } from "react-icons/io5";
+import { getLCP } from "web-vitals";
 function Packages(props) {
   return (
     <>
@@ -75,7 +76,7 @@ function Packages(props) {
               <PopoverCloseButton />
               <PopoverHeader>Location List!</PopoverHeader>
               {props.locations.map((loc) => {
-                return <PopoverBody> {loc.name}</PopoverBody>;
+                return <PopoverBody key={loc._id}> {loc.name}</PopoverBody>;
               })}
             </PopoverContent>
           </Popover>

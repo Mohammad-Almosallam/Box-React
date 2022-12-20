@@ -17,6 +17,16 @@ const createPackage = async (packageData, token) => {
   }
 };
 
+const updatePackage = async (packageData, packageId) => {
+  try {
+    const response = await axios.put(API_URL + packageId, packageData);
+
+    return response;
+  } catch (err) {
+    return err.response;
+  }
+};
+
 const getPackages = async (token) => {
   try {
     const config = {
@@ -104,4 +114,5 @@ export {
   deletePackage,
   calculateCost,
   getAllPackages,
+  updatePackage,
 };

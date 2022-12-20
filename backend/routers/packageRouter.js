@@ -11,7 +11,7 @@ const {
 const { protect } = require("../middleware/authMiddleware");
 
 router.route("/").get(protect, getPackages).post(protect, createPackage);
-router.route("/:id").delete(deletePackage).put(protect, updatePackage);
+router.route("/:id").delete(deletePackage).put(updatePackage);
 router.get("/allPackages", getAllPackages);
 
 module.exports = router;

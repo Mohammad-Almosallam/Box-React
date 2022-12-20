@@ -19,9 +19,13 @@ import {
   NumberIncrementStepper,
   NumberInputField,
 } from "@chakra-ui/react";
-import { createPackage, calculateCost } from "../auth/packageService";
+import {
+  createPackage,
+  calculateCost,
+  updatePackage,
+} from "../auth/packageService";
 
-function SendPackage() {
+function PackageForm(props) {
   const [formData, setFormData] = useState({
     name: "",
     weight: 0,
@@ -61,6 +65,30 @@ function SendPackage() {
       toast.error(message.data.message);
     } else if (message.status === 200) {
       toast.success("Package has been created!");
+    } else {
+      toast.error(message.statusText);
+    }
+  }
+
+  async function handleEdit(e, packageId) {
+    e.preventDefault();
+
+    const userData = {
+      name,
+      weight,
+      type,
+      recEmail,
+      width,
+      height,
+      insurance,
+    };
+
+    const message = await updatePackage(userData, packageId);
+
+    if (message.status === 400) {
+      toast.error(message.data.message);
+    } else if (message.status === 200) {
+      toast.success("Package has been updated!");
     } else {
       toast.error(message.statusText);
     }
@@ -201,7 +229,11 @@ function SendPackage() {
         <Button
           type="submit"
           onClick={(e) => {
-            handleOnSubmit(e);
+            if (props.name === "Edit") {
+              handleEdit(e, props.packageId);
+            } else {
+              handleOnSubmit(e);
+            }
           }}
           bg={"black"}
           colorScheme={""}
@@ -211,7 +243,7 @@ function SendPackage() {
           mt={"3"}
           alignItems={"center"}
         >
-          Send
+          {props.name === "Edit" ? "Edit" : "Send"}
           <IoChevronForwardOutline />
         </Button>
       </Flex>
@@ -219,4 +251,4 @@ function SendPackage() {
   );
 }
 
-export default SendPackage;
+export default PackageForm;

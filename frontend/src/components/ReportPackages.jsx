@@ -10,8 +10,18 @@ import {
   Td,
   TableContainer,
   Button,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+  Popover,
 } from "@chakra-ui/react";
 import { IoCloseOutline, IoCreateOutline } from "react-icons/io5";
+import PackageForm from "./PackageForm";
 
 function ReportPackages(props) {
   const data = props.allData;
@@ -49,12 +59,26 @@ function ReportPackages(props) {
                     <Td>
                       {
                         <Flex gap={"1rem"}>
-                          <button>
-                            <IoCreateOutline />
-                          </button>
+                          <Popover>
+                            <PopoverTrigger>
+                              <button>
+                                <IoCreateOutline />
+                              </button>
+                            </PopoverTrigger>
+                            <PopoverContent h={"180px"} overflow={"scroll"}>
+                              <PopoverArrow />
+                              <PopoverCloseButton />
+                              <PopoverHeader>Location List!</PopoverHeader>
+                              {
+                                <PackageForm
+                                  name="Edit"
+                                  packageId={eachPackage._id}
+                                />
+                              }
+                            </PopoverContent>
+                          </Popover>
                           <button
                             onClick={(e) => {
-                              console.log("click");
                               props.deletePackageHandler(e, eachPackage._id);
                             }}
                           >
