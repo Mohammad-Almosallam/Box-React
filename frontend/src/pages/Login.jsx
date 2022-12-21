@@ -56,21 +56,14 @@ function Login() {
 
   return (
     <Flex flexDir={"column"} h="100vh" justifyContent="center" align={"center"}>
-      <Flex alignItems={"center"} gap={"0.3rem"}>
-        <IoCubeOutline style={{ height: "68px", width: "55px" }} />
-      </Flex>
-      <Flex width={"100%"} h={"100vh"} flexDir={{ md: "column", lg: "row" }}>
-        <Box
-          flexDir={"column"}
-          display={{ sm: "none", lg: "flex" }}
-          width={"50%"}
-        >
+      <Flex width={"100%"} h={"100vh"} flexDir={"row"}>
+        <Box flexDir={"column"} display={"flex"} width={"50%"}>
           <img
             style={{ margin: "auto" }}
             src={require("../assets/img.gif")}
           ></img>
         </Box>
-        <Box w={{ sm: "100%", lg: "50%" }} margin={"auto"}>
+        <Box w={"100%"} margin={"auto"}>
           <Flex
             flexDirection={"column"}
             p={"1"}

@@ -16,6 +16,7 @@ import {
   Flex,
   Box,
   Heading,
+  Img,
 } from "@chakra-ui/react";
 
 function Register() {
@@ -65,21 +66,14 @@ function Register() {
 
   return (
     <Flex flexDir={"column"} h="100vh" justifyContent="center" align={"center"}>
-      <Flex alignItems={"center"} gap={"0.3rem"}>
-        <IoCubeOutline style={{ height: "68px", width: "55px" }} />
-      </Flex>
-      <Flex
-        width={"100%"}
-        h={"100vh"}
-        flexDir={{ md: "column", lg: "row-reverse" }}
-      >
-        <Box bg={"#"} display={{ sm: "none", lg: "flex" }} width={"50%"}>
+      <Flex width={"100%"} h={"100vh"} flexDir={"row-reverse"}>
+        <Box bg={"#"} display={"flex"} width={"50%"}>
           <img
             style={{ margin: "auto" }}
             src={require("../assets/img.gif")}
           ></img>
         </Box>
-        <Box w={{ sm: "100%", lg: "50%" }} p margin={"auto"}>
+        <Box w={"50%"} margin={"auto"}>
           <Flex
             flexDirection={"column"}
             p={"1"}
