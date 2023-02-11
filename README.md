@@ -1,6 +1,6 @@
 # Box 📦 
 
-<img src="https://media.giphy.com/media/4YIdN9xbtuz46cFnIN/giphy.gif" >
+<img src="https://media.giphy.com/media/4YIdN9xbtuz46cFnIN/giphy.gif" width="100%" hieght="100%">
 
 Box is a Full-stack web-based application for a package delivery service that allows company to track shipments and users to send/receive shipments. 
 
