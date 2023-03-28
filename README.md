@@ -1,7 +1,7 @@
 # Box 📦 
 
 <img src="https://media.giphy.com/media/4YIdN9xbtuz46cFnIN/giphy.gif" width="500" hieght="100%">
-# Link to Demo video:
+# Link to Demo video
 
 Link : https://vimeo.com/798108993
 
